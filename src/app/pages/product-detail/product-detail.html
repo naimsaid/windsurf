@@ -1,0 +1,90 @@
+@if (product(); as prod) {
+  <div class="product-detail-page">
+    <nav class="breadcrumb">
+      <a routerLink="/">Accueil</a>
+      <span>/</span>
+      <a routerLink="/products">Produits</a>
+      <span>/</span>
+      <a [routerLink]="['/products']" [queryParams]="{ category: prod.category }">{{ prod.category }}</a>
+      <span>/</span>
+      <span class="current">{{ prod.name }}</span>
+    </nav>
+
+    <div class="product-detail">
+      <div class="product-image-section">
+        <img [src]="prod.image" [alt]="prod.name" class="main-image" />
+      </div>
+
+      <div class="product-info-section">
+        <span class="product-category">{{ prod.category }}</span>
+        <h1 class="product-name">{{ prod.name }}</h1>
+
+        <div class="product-rating">
+          @for (star of getStars(prod.rating); track $index) {
+            <span class="star" [class.full]="star === 'full'" [class.half]="star === 'half'">★</span>
+          }
+          <span class="rating-value">{{ prod.rating }} / 5</span>
+        </div>
+
+        <div class="product-price">{{ prod.price | currency: 'EUR':'symbol':'1.2-2' }}</div>
+
+        <p class="product-description">{{ prod.description }}</p>
+
+        <div class="product-stock" [class.low]="prod.stock < 10">
+          @if (prod.stock > 0) {
+            <span>{{ prod.stock }} en stock</span>
+          } @else {
+            <span>Rupture de stock</span>
+          }
+        </div>
+
+        <div class="add-to-cart-section">
+          <div class="quantity-selector">
+            <button class="qty-btn" (click)="decreaseQuantity()" [disabled]="quantity() <= 1">−</button>
+            <span class="qty-value">{{ quantity() }}</span>
+            <button class="qty-btn" (click)="increaseQuantity()" [disabled]="quantity() >= prod.stock">+</button>
+          </div>
+          <button class="add-to-cart-btn" (click)="addToCart()" [disabled]="prod.stock === 0" [class.added]="addedToCart()">
+            @if (addedToCart()) {
+              Ajouté au panier !
+            } @else {
+              Ajouter au panier
+            }
+          </button>
+        </div>
+
+        <div class="product-features">
+          <div class="feature">
+            <span class="feature-icon">🚚</span>
+            <span>Livraison gratuite dès 100€</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🔄</span>
+            <span>Retour gratuit sous 30 jours</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🛡️</span>
+            <span>Garantie 2 ans</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @if (relatedProducts().length > 0) {
+      <section class="related-products">
+        <h2>Produits similaires</h2>
+        <div class="related-grid">
+          @for (related of relatedProducts(); track related.id) {
+            <a [routerLink]="['/products', related.id]" class="related-card">
+              <img [src]="related.image" [alt]="related.name" class="related-image" loading="lazy" />
+              <div class="related-info">
+                <span class="related-name">{{ related.name }}</span>
+                <span class="related-price">{{ related.price | currency: 'EUR':'symbol':'1.2-2' }}</span>
+              </div>
+            </a>
+          }
+        </div>
+      </section>
+    }
+  </div>
+}

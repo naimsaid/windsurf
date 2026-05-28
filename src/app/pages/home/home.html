@@ -1,0 +1,72 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bienvenue sur <span class="highlight">ShopAngular</span></h1>
+    <p>Découvrez notre sélection de produits de qualité à des prix imbattables</p>
+    <a routerLink="/products" class="hero-btn">Voir les produits</a>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories-section">
+  <div class="container">
+    <h2 class="section-title">Nos Catégories</h2>
+    <div class="categories-grid">
+      @for (category of categories; track category.id) {
+        <a [routerLink]="['/products']" [queryParams]="{ category: category.name }" class="category-card">
+          <span class="category-icon">{{ category.icon }}</span>
+          <span class="category-name">{{ category.name }}</span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="featured-section">
+  <div class="container">
+    <h2 class="section-title">Produits en Vedette</h2>
+    <div class="products-grid">
+      @for (product of featuredProducts; track product.id) {
+        <div class="product-card">
+          <a [routerLink]="['/products', product.id]" class="product-image-link">
+            <img [src]="product.image" [alt]="product.name" class="product-image" loading="lazy" />
+            @if (product.featured) {
+              <span class="badge">Vedette</span>
+            }
+          </a>
+          <div class="product-info">
+            <span class="product-category">{{ product.category }}</span>
+            <a [routerLink]="['/products', product.id]" class="product-name">{{ product.name }}</a>
+            <div class="product-rating">
+              @for (star of getStars(product.rating); track $index) {
+                <span class="star" [class.full]="star === 'full'" [class.half]="star === 'half'">★</span>
+              }
+              <span class="rating-value">({{ product.rating }})</span>
+            </div>
+            <div class="product-footer">
+              <span class="product-price">{{ product.price | currency: 'EUR':'symbol':'1.2-2' }}</span>
+              <button class="add-to-cart-btn" (click)="addToCart(product)">
+                Ajouter au panier
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    <div class="view-all">
+      <a routerLink="/products" class="view-all-btn">Voir tous les produits →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Promo Banner -->
+<section class="promo-banner">
+  <div class="container">
+    <div class="promo-content">
+      <h2>Livraison Gratuite</h2>
+      <p>Pour toute commande supérieure à 100€</p>
+      <a routerLink="/products" class="promo-btn">En profiter maintenant</a>
+    </div>
+  </div>
+</section>
