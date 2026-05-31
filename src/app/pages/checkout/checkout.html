@@ -1,7 +1,7 @@
 <div class="checkout-page">
   @if (orderPlaced()) {
     <div class="order-success">
-      <span class="success-icon">🎉</span>
+      <span class="success-icon material-symbols-outlined">celebration</span>
       <h1>Commande confirmée !</h1>
       <p>Merci pour votre achat. Votre numéro de commande est :</p>
       <span class="order-id">{{ orderId() }}</span>
@@ -74,17 +74,17 @@
               <div class="payment-methods">
                 <label class="payment-option" [class.selected]="paymentMethod === 'card'">
                   <input type="radio" name="paymentMethod" value="card" [(ngModel)]="paymentMethod" />
-                  <span class="payment-icon">💳</span>
+                  <span class="payment-icon material-symbols-outlined">credit_card</span>
                   <span>Carte bancaire</span>
                 </label>
                 <label class="payment-option" [class.selected]="paymentMethod === 'paypal'">
                   <input type="radio" name="paymentMethod" value="paypal" [(ngModel)]="paymentMethod" />
-                  <span class="payment-icon">🅿️</span>
+                  <span class="payment-icon material-symbols-outlined">account_balance_wallet</span>
                   <span>PayPal</span>
                 </label>
                 <label class="payment-option" [class.selected]="paymentMethod === 'bank'">
                   <input type="radio" name="paymentMethod" value="bank" [(ngModel)]="paymentMethod" />
-                  <span class="payment-icon">🏦</span>
+                  <span class="payment-icon material-symbols-outlined">account_balance</span>
                   <span>Virement bancaire</span>
                 </label>
               </div>

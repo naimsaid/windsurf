@@ -1,12 +1,12 @@
 import { Category, Product } from '../models/product.model';
 
 export const CATEGORIES: Category[] = [
-  { id: 1, name: 'Électronique', icon: '💻' },
-  { id: 2, name: 'Vêtements', icon: '👕' },
-  { id: 3, name: 'Maison & Jardin', icon: '🏠' },
-  { id: 4, name: 'Sports', icon: '⚽' },
-  { id: 5, name: 'Livres', icon: '📚' },
-  { id: 6, name: 'Beauté', icon: '💄' },
+  { id: 1, name: 'Électronique', icon: 'devices' },
+  { id: 2, name: 'Vêtements', icon: 'checkroom' },
+  { id: 3, name: 'Maison & Jardin', icon: 'home' },
+  { id: 4, name: 'Sports', icon: 'sports_soccer' },
+  { id: 5, name: 'Livres', icon: 'menu_book' },
+  { id: 6, name: 'Beauté', icon: 'spa' },
 ];
 
 export const PRODUCTS: Product[] = [

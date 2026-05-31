@@ -14,7 +14,7 @@
     <div class="categories-grid">
       @for (category of categories; track category.id) {
         <a [routerLink]="['/products']" [queryParams]="{ category: category.name }" class="category-card">
-          <span class="category-icon">{{ category.icon }}</span>
+          <span class="category-icon material-symbols-outlined">{{ category.icon }}</span>
           <span class="category-name">{{ category.name }}</span>
         </a>
       }
