@@ -1,0 +1,91 @@
+<div class="cart-page">
+  <h1>Mon Panier</h1>
+
+  @if (cartService.items().length === 0) {
+    <div class="empty-cart">
+      <span class="empty-icon material-symbols-outlined">shopping_cart</span>
+      <h2>Votre panier est vide</h2>
+      <p>Découvrez nos produits et ajoutez-les à votre panier</p>
+      <a routerLink="/products" class="shop-btn">Voir les produits</a>
+    </div>
+  } @else {
+    <div class="cart-content">
+      <div class="cart-items">
+        <div class="cart-header-row">
+          <span>Produit</span>
+          <span>Prix</span>
+          <span>Quantité</span>
+          <span>Total</span>
+          <span></span>
+        </div>
+
+        @for (item of cartService.items(); track item.product.id) {
+          <div class="cart-item">
+            <div class="item-product">
+              <a [routerLink]="['/products', item.product.id]">
+                <img [src]="item.product.image" [alt]="item.product.name" class="item-image" />
+              </a>
+              <div class="item-details">
+                <a [routerLink]="['/products', item.product.id]" class="item-name">{{ item.product.name }}</a>
+                <span class="item-category">{{ item.product.category }}</span>
+              </div>
+            </div>
+
+            <div class="item-price">{{ item.product.price | currency: 'EUR':'symbol':'1.2-2' }}</div>
+
+            <div class="item-quantity">
+              <button class="qty-btn" (click)="decreaseQuantity(item.product.id, item.quantity)">−</button>
+              <span class="qty-value">{{ item.quantity }}</span>
+              <button class="qty-btn" (click)="increaseQuantity(item.product.id, item.quantity)">+</button>
+            </div>
+
+            <div class="item-total">
+              {{ item.product.price * item.quantity | currency: 'EUR':'symbol':'1.2-2' }}
+            </div>
+
+            <button class="remove-btn" (click)="removeItem(item.product.id)" title="Supprimer">✕</button>
+          </div>
+        }
+
+        <div class="cart-actions">
+          <button class="clear-cart-btn" (click)="clearCart()">Vider le panier</button>
+          <a routerLink="/products" class="continue-shopping">← Continuer les achats</a>
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <h3>Résumé de la commande</h3>
+        <div class="summary-row">
+          <span>Sous-total</span>
+          <span>{{ cartService.subtotal() | currency: 'EUR':'symbol':'1.2-2' }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Livraison</span>
+          <span>
+            @if (cartService.shipping() === 0) {
+              <span class="free-shipping">Gratuite</span>
+            } @else {
+              {{ cartService.shipping() | currency: 'EUR':'symbol':'1.2-2' }}
+            }
+          </span>
+        </div>
+        <div class="summary-row">
+          <span>TVA (20%)</span>
+          <span>{{ cartService.tax() | currency: 'EUR':'symbol':'1.2-2' }}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>{{ cartService.total() | currency: 'EUR':'symbol':'1.2-2' }}</span>
+        </div>
+
+        @if (cartService.subtotal() < 100) {
+          <div class="free-shipping-notice">
+            Plus que {{ 100 - cartService.subtotal() | currency: 'EUR':'symbol':'1.2-2' }} pour la livraison gratuite !
+          </div>
+        }
+
+        <a routerLink="/checkout" class="checkout-btn">Passer la commande</a>
+      </div>
+    </div>
+  }
+</div>
